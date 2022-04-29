@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.coin.coinapplication">
+    package="com.helmets.application">
 
     <application
-        android:name=".AndroidApplication"
+        android:name="com.helmets.application.AndroidApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CoinApplication">
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name="com.helmets.application.view.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
