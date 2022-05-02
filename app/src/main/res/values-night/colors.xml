@@ -8,17 +8,17 @@
 
     <!--my color-->
     <color name="black_darker">#000000</color>
-    <color name="black_darker_detail">#000000</color>
-    <color name="black">#333333</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="gray">#999999</color>
-    <color name="gray_soft">#EEEEEE</color>
+    <color name="black_darker_detail">#FFFFFF</color>
+    <color name="black">#FFFFFFFF</color>
+    <color name="white">#333333</color>
+    <color name="gray">#C4C4C4</color>
+    <color name="gray_soft">#555555</color>
     <color name="blue_sky">#38A0FF</color>
     <color name="red">#F82D2D</color>
-    <color name="green">#13BC24</color>
-    <color name="card_view_color">#F9F9F9</color>
     <color name="orange">#F7931A</color>
-    <color name="bg_search">#EEEEEE</color>
-    <color name="icon_search">#C4C4C4</color>
+    <color name="green">#13BC24</color>
+    <color name="card_view_color">#3C3C3C</color>
+    <color name="bg_search">#555555</color>
+    <color name="icon_search">#FFFFFF</color>
 
 </resources>

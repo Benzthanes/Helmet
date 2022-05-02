@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "457157800878",
+    "firebase_url": "https://helmet-project-6853d-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "helmet-project-6853d",
+    "storage_bucket": "helmet-project-6853d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:457157800878:android:c6ab16102b23887acc0e3f",
+        "android_client_info": {
+          "package_name": "com.helmets.application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "457157800878-k3kqc588a0p5gqq90o1103er0kn15fdh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdRsB4gFKCdF3bQ5xaExyHTjWcGXyMb7o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "457157800878-k3kqc588a0p5gqq90o1103er0kn15fdh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
