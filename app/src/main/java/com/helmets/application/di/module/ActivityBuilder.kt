@@ -1,5 +1,6 @@
 package com.helmets.application.di.module
 
+import com.helmets.application.view.activity.FilterActivity
 import com.helmets.application.view.activity.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -9,5 +10,8 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector
     abstract fun bindMainActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindFilterActivity(): FilterActivity
 
 }

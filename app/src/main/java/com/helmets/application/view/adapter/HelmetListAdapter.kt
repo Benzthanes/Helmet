@@ -2,9 +2,6 @@ package com.helmets.application.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncDifferConfig
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.coin.coinapplication.view.extension.loadImageFormUrl
 import com.helmets.application.R
@@ -16,21 +13,14 @@ import com.helmets.presentation.model.HelmetModel
 import com.helmets.presentation.model.ViewType
 
 class HelmetListAdapter constructor(
-    private val listener: OnItemClickListenerSingleData<HelmetModel>
-) : ListAdapter<HelmetModel, RecyclerView.ViewHolder>(
-    AsyncDifferConfig.Builder(
-        CoinListDiffCallback()
-    ).build()
-) {
-    class CoinListDiffCallback : DiffUtil.ItemCallback<HelmetModel>() {
-        override fun areItemsTheSame(oldItem: HelmetModel, newItem: HelmetModel): Boolean {
-            return oldItem.name == newItem.name &&
-                    oldItem.model == newItem.model
-        }
+    private val listener: OnItemClickListenerSingleData<HelmetModel>,
+    private val itemList: ArrayList<HelmetModel> = arrayListOf()
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-        override fun areContentsTheSame(oldItem: HelmetModel, newItem: HelmetModel): Boolean {
-            return oldItem == newItem
-        }
+    fun updateList(items: ArrayList<HelmetModel>) {
+        itemList.clear()
+        itemList.addAll(items)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -62,12 +52,16 @@ class HelmetListAdapter constructor(
         }
     }
 
+    override fun getItemCount(): Int {
+        return itemList.size
+    }
+
     override fun getItemViewType(position: Int): Int {
-        return getItem(position).viewType.ordinal
+        return itemList[position].viewType.ordinal
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = getItem(position)
+        val item = itemList[position]
         when (holder) {
             is HelmetItemViewHolder -> {
                 holder.bind(item)
@@ -88,11 +82,20 @@ class HelmetListAdapter constructor(
     ) : RecyclerView.ViewHolder(itemBinding.root) {
 
         fun bind(display: HelmetModel) {
+
+
             itemBinding.apply {
                 display.apply {
+                    val costFormat = COMMA_FORMAT.format(cost.toInt())
+                    val sellingPriceFormat = COMMA_FORMAT.format(sell_price.toInt())
+
                     tvHelmetName.text = name
-                    tvPrice.text = "891/1,100"
-                    tvSize.text = "Size S $s M $m L $l XL $xl XXL $xxl"
+                    tvPrice.text = "Price $costFormat/$sellingPriceFormat"
+                    tvSizeS.text = "S=$s"
+                    tvSizeM.text = "M=$m"
+                    tvSizeL.text = "L=$l"
+                    tvSizeXL.text = "XL=$xl"
+                    tvSizeXXL.text = "XXL=$xxl"
 
                     ivIcon.loadImageFormUrl(
                         root.context,
@@ -136,5 +139,7 @@ class HelmetListAdapter constructor(
     }
 
     companion object {
+        private const val COMMA_FORMAT = "%,d"
     }
+
 }

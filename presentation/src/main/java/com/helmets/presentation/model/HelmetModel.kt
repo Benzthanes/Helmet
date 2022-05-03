@@ -15,5 +15,8 @@ data class HelmetModel(
     @SerializedName("l") var l: String = "0",
     @SerializedName("xl") var xl: String = "0",
     @SerializedName("xxl") var xxl: String = "0",
+    @SerializedName("cost") var cost: String = "0",
+    @SerializedName("sell_price") var sell_price: String = "0",
+    @SerializedName("product_type") var product_type: String = "",
     @SerializedName("viewType") var viewType: ViewType = ViewType.ITEM
 ) : Parcelable
