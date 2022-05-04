@@ -16,7 +16,14 @@ data class HelmetModel(
     @SerializedName("xl") var xl: String = "0",
     @SerializedName("xxl") var xxl: String = "0",
     @SerializedName("cost") var cost: String = "0",
-    @SerializedName("sell_price") var sell_price: String = "0",
-    @SerializedName("product_type") var product_type: String = "",
+    @SerializedName("sellPrice") var sellPrice: String = "0",
+    @SerializedName("productType") var productType: String = "",
+    @SerializedName("shieldLevel") var shieldLevel: String = "1",
     @SerializedName("viewType") var viewType: ViewType = ViewType.ITEM
+) : Parcelable
+
+@Parcelize
+data class LogoModel(
+    var logoName: String = "",
+    var logoUrl: String = "",
 ) : Parcelable

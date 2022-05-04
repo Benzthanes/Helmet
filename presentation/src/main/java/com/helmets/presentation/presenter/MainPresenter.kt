@@ -7,8 +7,18 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.helmets.presentation.BasePresenter
+import com.helmets.presentation.model.BrandType.Companion.FUSE
+import com.helmets.presentation.model.BrandType.Companion.ID
+import com.helmets.presentation.model.BrandType.Companion.INDEX
+import com.helmets.presentation.model.BrandType.Companion.RD
+import com.helmets.presentation.model.BrandType.Companion.SPACE_CROWN
 import com.helmets.presentation.model.FilterModel
 import com.helmets.presentation.model.HelmetModel
+import com.helmets.presentation.model.LogoModel
+import com.helmets.presentation.model.ProductType.Companion.FLIP_UP
+import com.helmets.presentation.model.ProductType.Companion.FULL_FACE
+import com.helmets.presentation.model.ProductType.Companion.HALF_FACE
+import com.helmets.presentation.model.ProductType.Companion.OPEN_FACE
 import com.helmets.presentation.model.ViewType
 import com.helmets.presentation.view.MainContractor
 import javax.inject.Inject
@@ -17,36 +27,17 @@ class MainPresenter @Inject constructor() : BasePresenter<MainContractor.View>()
     MainContractor.Presenter {
     private lateinit var database: DatabaseReference
     private val helmetsModel = arrayListOf<HelmetModel>()
+    private val logoModel = arrayListOf<LogoModel>()
+
+    companion object {
+        private const val LOGO_STRING = "logo"
+    }
 
     override fun onStart() {
         database = Firebase.database.reference
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                helmetsModel.clear()
-                for (helmets in dataSnapshot.children) {
-                    for (brand in helmets.children) {
-                        helmetsModel.add(
-                            HelmetModel(
-                                viewType = ViewType.BRAND,
-                                brand = brand.key.toString(),
-                            )
-                        )
-                        for (model in brand.children) {
-                            helmetsModel.add(
-                                HelmetModel(
-                                    viewType = ViewType.MODEL,
-                                    brand = brand.key.toString(),
-                                    model = model.key.toString()
-                                )
-                            )
-                            for (helmet in model.children) {
-                                helmet.getValue(HelmetModel::class.java)?.let {
-                                    helmetsModel.add(it)
-                                }
-                            }
-                        }
-                    }
-                }
+                getDataFromServer(dataSnapshot)
                 doInView { view ->
                     view.updateHelmetList(helmetsModel)
                 }
@@ -57,6 +48,45 @@ class MainPresenter @Inject constructor() : BasePresenter<MainContractor.View>()
             }
         }
         database.addValueEventListener(postListener)
+    }
+
+    private fun getDataFromServer(dataSnapshot: DataSnapshot) {
+        helmetsModel.clear()
+        logoModel.clear()
+        for (helmets in dataSnapshot.children) {
+            for (brand in helmets.children) {
+                setLogo(brand)
+                helmetsModel.add(
+                    HelmetModel(
+                        viewType = ViewType.BRAND,
+                        brand = brand.key.toString(),
+                        imgUrl = getImageLogo(brand.key.toString()),
+                    )
+                )
+                for (model in brand.children) {
+                    if (model.key.toString() != LOGO_STRING) {
+                        helmetsModel.add(
+                            HelmetModel(
+                                viewType = ViewType.MODEL,
+                                brand = brand.key.toString(),
+                                model = model.key.toString()
+                            )
+                        )
+                    }
+                    for (helmet in model.children) {
+                        helmet.getValue(HelmetModel::class.java)?.let {
+                            helmetsModel.add(it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    override fun resetFilter() {
+        doInView { view ->
+            view.updateHelmetList(helmetsModel)
+        }
     }
 
     override fun setFilter(filterModel: FilterModel) {
@@ -77,9 +107,14 @@ class MainPresenter @Inject constructor() : BasePresenter<MainContractor.View>()
         // filter product type
         filterHelmetList = filterProductType(filterModel, filterHelmetList)
 
+        // filter shield level
+        filterHelmetList = filterShieldLevel(filterModel, filterHelmetList)
 
+        // filter price
+        filterHelmetList = filterPrice(filterModel, filterHelmetList)
+
+        // add header
         filterHelmetList = addHeader(filterHelmetList)
-
 
         doInView { view -> view.displayHelmetFilter(filterHelmetList) }
     }
@@ -87,16 +122,19 @@ class MainPresenter @Inject constructor() : BasePresenter<MainContractor.View>()
     private fun createListBrandForFilter(filterModel: FilterModel): ArrayList<String> {
         val listBrand = arrayListOf<String>()
         if (filterModel.isBrandFuse) {
-            listBrand.add("fuse")
+            listBrand.add(FUSE)
         }
         if (filterModel.isBrandIndex) {
-            listBrand.add("index")
+            listBrand.add(INDEX)
         }
         if (filterModel.isBrandId) {
-            listBrand.add("id")
+            listBrand.add(ID)
         }
         if (filterModel.isBrandRd) {
-            listBrand.add("rd")
+            listBrand.add(RD)
+        }
+        if (filterModel.isBrandSpaceCrown) {
+            listBrand.add(SPACE_CROWN)
         }
         return listBrand
     }
@@ -108,7 +146,8 @@ class MainPresenter @Inject constructor() : BasePresenter<MainContractor.View>()
         return if (filterModel.isBrandFuse ||
             filterModel.isBrandIndex ||
             filterModel.isBrandId ||
-            filterModel.isBrandRd
+            filterModel.isBrandRd ||
+            filterModel.isBrandSpaceCrown
         ) {
             val brandList = createListBrandForFilter(filterModel)
             val filterList = ArrayList(filterHelmetList.filter { item ->
@@ -181,7 +220,7 @@ class MainPresenter @Inject constructor() : BasePresenter<MainContractor.View>()
         ) {
             val productTypeList = createListProductTypeForFilter(filterModel)
             val filterList = ArrayList(filterHelmetList.filter { item ->
-                val type = item.product_type.lowercase().split("/")
+                val type = item.productType.lowercase().split("/")
                 when (type.size) {
                     1 -> {
                         productTypeList.contains(type[0].lowercase().trim())
@@ -206,16 +245,16 @@ class MainPresenter @Inject constructor() : BasePresenter<MainContractor.View>()
     private fun createListProductTypeForFilter(filterModel: FilterModel): ArrayList<String> {
         val listProductType = arrayListOf<String>()
         if (filterModel.isHalfFace) {
-            listProductType.add("half face")
+            listProductType.add(HALF_FACE)
         }
         if (filterModel.isOpenFace) {
-            listProductType.add("open face")
+            listProductType.add(OPEN_FACE)
         }
         if (filterModel.isFullFace) {
-            listProductType.add("full face")
+            listProductType.add(FULL_FACE)
         }
         if (filterModel.isFlipUp) {
-            listProductType.add("flip up")
+            listProductType.add(FLIP_UP)
         }
         return listProductType
     }
@@ -231,7 +270,8 @@ class MainPresenter @Inject constructor() : BasePresenter<MainContractor.View>()
                 helmetList.add(
                     HelmetModel(
                         viewType = ViewType.BRAND,
-                        brand = item.brand
+                        brand = item.brand.uppercase(),
+                        imgUrl = getImageLogo(item.brand)
                     )
                 )
             }
@@ -241,8 +281,8 @@ class MainPresenter @Inject constructor() : BasePresenter<MainContractor.View>()
                 helmetList.add(
                     HelmetModel(
                         viewType = ViewType.MODEL,
-                        brand = item.brand,
-                        model = item.model
+                        brand = item.brand.uppercase(),
+                        model = item.model.uppercase()
                     )
                 )
             }
@@ -251,6 +291,64 @@ class MainPresenter @Inject constructor() : BasePresenter<MainContractor.View>()
 
         }
         return helmetList
+    }
+
+    private fun filterPrice(
+        filterModel: FilterModel,
+        filterHelmetList: ArrayList<HelmetModel>
+    ): ArrayList<HelmetModel> {
+        filterModel.apply {
+            minPrice?.let { min ->
+                maxPrice?.let { max ->
+                    val filterList = ArrayList(filterHelmetList.filter { item ->
+                        item.sellPrice.toInt() in min..max
+                    })
+                    return filterList
+                }
+            }
+        }
+        return filterHelmetList
+    }
+
+    private fun filterShieldLevel(
+        filterModel: FilterModel,
+        filterHelmetList: ArrayList<HelmetModel>
+    ): ArrayList<HelmetModel> {
+        if (filterModel.isShield1 ||
+            filterModel.isShield2
+        ) {
+            val filterShieldList = arrayListOf<HelmetModel>()
+            var filterShieldTempList: ArrayList<HelmetModel>
+
+            if (filterModel.isShield1) {
+                filterShieldTempList =
+                    ArrayList(filterHelmetList.filter { item -> item.shieldLevel.toInt() == 1 })
+                filterShieldList.addAll(filterShieldTempList)
+            }
+
+            if (filterModel.isShield2) {
+                filterShieldTempList =
+                    ArrayList(filterHelmetList.filter { item -> item.shieldLevel.toInt() == 2 })
+                filterShieldList.addAll(filterShieldTempList)
+            }
+
+            filterHelmetList.clear()
+            filterHelmetList.addAll(filterShieldList)
+            return filterHelmetList
+        } else {
+            return filterHelmetList
+        }
+    }
+
+    private fun setLogo(brand: DataSnapshot) {
+        val logoName = brand.key.toString()
+        val logoUrl = brand.child(LOGO_STRING).value.toString()
+        logoModel.add(LogoModel(logoName, logoUrl))
+    }
+
+    private fun getImageLogo(brand: String): String {
+        val logo = logoModel.first { item -> item.logoName.lowercase() == brand.lowercase() }
+        return logo.logoUrl
     }
 
 }

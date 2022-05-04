@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">HelmetSamphran</string>
     <string name="search">Search</string>
+    <string name="size">Size</string>
+    <string name="price">Price</string>
+    <string name="s">S</string>
+    <string name="m">M</string>
+    <string name="l">L</string>
+    <string name="xl">Xl</string>
+    <string name="xxl">XXl</string>
 
 </resources>

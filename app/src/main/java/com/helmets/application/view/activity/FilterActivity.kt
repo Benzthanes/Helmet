@@ -11,6 +11,10 @@ class FilterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFilterBinding
 
+    companion object {
+        const val FILTER_KEY = "FILTER"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFilterBinding.inflate(layoutInflater)
@@ -22,6 +26,7 @@ class FilterActivity : AppCompatActivity() {
                     isBrandIndex = cbBrandIndex.isChecked,
                     isBrandId = cbBrandId.isChecked,
                     isBrandRd = cbBrandRd.isChecked,
+                    isBrandSpaceCrown = cbBrandSpaceCrown.isChecked,
                     isSizeS = cbSizeS.isChecked,
                     isSizeM = cbSizeM.isChecked,
                     isSizeL = cbSizeL.isChecked,
@@ -30,12 +35,26 @@ class FilterActivity : AppCompatActivity() {
                     isHalfFace = cbHalfFace.isChecked,
                     isOpenFace = cbOpenFace.isChecked,
                     isFullFace = cbFullFace.isChecked,
-                    isFlipUp = cbFlipUp.isChecked
+                    isFlipUp = cbFlipUp.isChecked,
+                    isShield1 = cbShieldOne.isChecked,
+                    isShield2 = cbShieldTwo.isChecked
                 )
-                val returnIntent = Intent()
-                returnIntent.putExtra("filter", filterModel)
-                setResult(RESULT_OK, returnIntent)
-                finish()
+                if (!edMinPrice.text.isNullOrBlank() && !edMaxPrice.text.isNullOrBlank()) {
+                    filterModel.minPrice = edMinPrice.text.toString().toInt()
+                    filterModel.maxPrice = edMaxPrice.text.toString().toInt()
+                } else if (!edMinPrice.text.isNullOrBlank()) {
+                    filterModel.minPrice = edMinPrice.text.toString().toInt()
+                    filterModel.maxPrice = 999999
+                } else if (!edMaxPrice.text.isNullOrBlank()) {
+                    filterModel.minPrice = 0
+                    filterModel.maxPrice = edMaxPrice.text.toString().toInt()
+                }
+
+                Intent().apply {
+                    putExtra(FILTER_KEY, filterModel)
+                    setResult(RESULT_OK, this)
+                    finish()
+                }
             }
         }
 

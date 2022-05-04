@@ -20,5 +20,9 @@
     <color name="card_view_color">#3C3C3C</color>
     <color name="bg_search">#555555</color>
     <color name="icon_search">#FFFFFF</color>
+    <color name="primary_purple">#7F50B2</color>
+    <color name="yellow">#D2791c</color>
+    <color name="primary_purple_dark">#4B1E95</color>
+    <color name="transparent">#00000000</color>
 
 </resources>

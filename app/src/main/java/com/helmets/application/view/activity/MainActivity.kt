@@ -9,6 +9,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.helmets.application.R
 import com.helmets.application.databinding.ActivityMainBinding
+import com.helmets.application.view.activity.FilterActivity.Companion.FILTER_KEY
 import com.helmets.application.view.adapter.HelmetListAdapter
 import com.helmets.application.view.listener.OnItemClickListenerSingleData
 import com.helmets.presentation.model.FilterModel
@@ -27,14 +28,19 @@ class MainActivity : BaseActivity(), MainContractor.View,
     @Inject
     lateinit var presenter: MainPresenter
 
+    companion object {
+        private const val FILTER_MENU = "filter"
+        private const val RESET_FILTER_MENU = "reset"
+    }
+
     private var resultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            // There are no request codes
-            val data: Intent? = result.data
-            data?.getParcelableExtra<FilterModel>("filter")?.let {
-                presenter.setFilter(it)
+            result.data?.apply {
+                getParcelableExtra<FilterModel>(FILTER_KEY)?.let {
+                    presenter.setFilter(it)
+                }
             }
         }
     }
@@ -56,9 +62,12 @@ class MainActivity : BaseActivity(), MainContractor.View,
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.toString()) {
-            "filter" -> {
+            FILTER_MENU -> {
                 val intent = Intent(this, FilterActivity::class.java)
                 resultLauncher.launch(intent)
+            }
+            RESET_FILTER_MENU -> {
+                presenter.resetFilter()
             }
             else -> {
                 // do nothing

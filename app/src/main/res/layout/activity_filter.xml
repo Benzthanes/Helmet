@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/default_8dp"
     tools:context=".view.activity.FilterActivity">
 
     <androidx.core.widget.NestedScrollView
@@ -25,6 +26,8 @@
                 android:id="@+id/csBrandLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_border_gradient_orange"
+                android:padding="@dimen/default_8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -35,7 +38,8 @@
                     android:layout_height="wrap_content"
                     android:text="Brand"
                     android:textColor="@color/black_darker"
-                    android:textSize="@dimen/default_text_size_20"
+                    android:textSize="@dimen/default_text_size_18"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +47,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvBrand">
@@ -52,31 +56,42 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <CheckBox
                             android:id="@+id/cbBrandFuse"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="FUSE" />
+                            android:text="FUSE"
+                            android:textStyle="bold" />
+
+                        <CheckBox
+                            android:id="@+id/cbBrandSpaceCrown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="SPACE CROWN"
+                            android:textStyle="bold" />
 
                         <CheckBox
                             android:id="@+id/cbBrandIndex"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="INDEX" />
+                            android:text="INDEX"
+                            android:textStyle="bold" />
 
                         <CheckBox
                             android:id="@+id/cbBrandId"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="ID" />
+                            android:text="ID"
+                            android:textStyle="bold" />
 
                         <CheckBox
                             android:id="@+id/cbBrandRd"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="RD" />
+                            android:text="RD"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -84,7 +99,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                     </LinearLayout>
 
@@ -92,7 +107,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
 
                     </LinearLayout>
 
@@ -104,6 +127,9 @@
                 android:id="@+id/csSizeLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_8dp"
+                android:background="@drawable/bg_border_gradient_orange"
+                android:padding="@dimen/default_8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/csBrandLayout">
@@ -114,7 +140,8 @@
                     android:layout_height="wrap_content"
                     android:text="Size"
                     android:textColor="@color/black_darker"
-                    android:textSize="@dimen/default_text_size_20"
+                    android:textSize="@dimen/default_text_size_18"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -131,31 +158,36 @@
                         android:id="@+id/cbSizeS"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="S" />
+                        android:text="S"
+                        android:textStyle="bold" />
 
                     <CheckBox
                         android:id="@+id/cbSizeM"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="M" />
+                        android:text="M"
+                        android:textStyle="bold" />
 
                     <CheckBox
                         android:id="@+id/cbSizeL"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="L" />
+                        android:text="L"
+                        android:textStyle="bold" />
 
                     <CheckBox
                         android:id="@+id/cbSizeXL"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="XL" />
+                        android:text="XL"
+                        android:textStyle="bold" />
 
                     <CheckBox
                         android:id="@+id/cbSizeXXL"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="XXL" />
+                        android:text="XXL"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -165,6 +197,9 @@
                 android:id="@+id/csProductTypeLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_8dp"
+                android:background="@drawable/bg_border_gradient_orange"
+                android:padding="@dimen/default_8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/csSizeLayout">
@@ -175,7 +210,8 @@
                     android:layout_height="wrap_content"
                     android:text="ProductType"
                     android:textColor="@color/black_darker"
-                    android:textSize="@dimen/default_text_size_20"
+                    android:textSize="@dimen/default_text_size_18"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -192,25 +228,129 @@
                         android:id="@+id/cbHalfFace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Half Face" />
+                        android:text="Half Face"
+                        android:textStyle="bold" />
 
                     <CheckBox
                         android:id="@+id/cbOpenFace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Open Face" />
+                        android:text="Open Face"
+                        android:textStyle="bold" />
 
                     <CheckBox
                         android:id="@+id/cbFullFace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Full Face" />
+                        android:text="Full Face"
+                        android:textStyle="bold" />
 
                     <CheckBox
                         android:id="@+id/cbFlipUp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Flip Up" />
+                        android:text="Flip Up"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/csShieldLevelLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_8dp"
+                android:background="@drawable/bg_border_gradient_orange"
+                android:padding="@dimen/default_8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/csProductTypeLayout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvShieldLevel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Shield level"
+                    android:textColor="@color/black_darker"
+                    android:textSize="@dimen/default_text_size_18"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvShieldLevel">
+
+                    <CheckBox
+                        android:id="@+id/cbShieldOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="แว่น 1 ชั้น"
+                        android:textStyle="bold" />
+
+                    <CheckBox
+                        android:id="@+id/cbShieldTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="แว่น 2 ชั้น"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/csPriceLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_8dp"
+                android:background="@drawable/bg_border_gradient_orange"
+                android:padding="@dimen/default_8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/csShieldLevelLayout">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:textColor="@color/black_darker"
+                    android:textSize="@dimen/default_text_size_18"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPrice">
+
+                    <EditText
+                        android:id="@+id/edMinPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="min price"
+                        android:inputType="number"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/edMaxPrice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="max price"
+                        android:inputType="number"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -226,7 +366,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_12dp"
+        android:background="@color/red"
         android:text="Apply"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

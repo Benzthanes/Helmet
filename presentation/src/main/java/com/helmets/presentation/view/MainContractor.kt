@@ -13,6 +13,7 @@ interface MainContractor {
 
     interface Presenter {
         fun onStart()
+        fun resetFilter()
         fun setFilter(filterModel: FilterModel)
     }
 }

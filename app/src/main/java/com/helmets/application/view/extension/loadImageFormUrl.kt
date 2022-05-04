@@ -1,4 +1,4 @@
-package com.coin.coinapplication.view.extension
+package com.helmets.application.view.extension
 
 import android.content.Context
 import android.net.Uri
