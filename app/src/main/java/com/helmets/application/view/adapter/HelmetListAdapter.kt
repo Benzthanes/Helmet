@@ -4,13 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.helmets.application.R
 import com.helmets.application.databinding.ItemBrandHeaderBinding
 import com.helmets.application.databinding.ItemHelmetListBinding
 import com.helmets.application.databinding.ItemModelHeaderBinding
 import com.helmets.application.view.custom.CustomZoomImageDialog
+import com.helmets.application.view.extension.gone
 import com.helmets.application.view.extension.loadImageFormUrl
+import com.helmets.application.view.extension.visible
 import com.helmets.application.view.listener.OnItemClickListenerSingleData
 import com.helmets.presentation.model.HelmetModel
 import com.helmets.presentation.model.ViewType
@@ -95,11 +98,24 @@ class HelmetListAdapter constructor(
                     root.context.apply {
                         tvPrice.text =
                             getString(R.string.price) + " $costFormat/$sellingPriceFormat"
-                        tvSizeS.text = getString(R.string.s) + "$EQUAL$s"
-                        tvSizeM.text = getString(R.string.m) + "$EQUAL$m"
-                        tvSizeL.text = getString(R.string.l) + "$EQUAL$l"
-                        tvSizeXL.text = getString(R.string.xl) + "$EQUAL$xl"
-                        tvSizeXXL.text = getString(R.string.xxl) + "$EQUAL$xxl"
+                        if ((s.toInt() + m.toInt() + l.toInt() + xl.toInt() + xxl.toInt()) == ZERO) {
+                            tvSize.text = getString(R.string.out_of_stock)
+                            tvSizeS.gone()
+                            tvSizeM.gone()
+                            tvSizeL.gone()
+                            tvSizeXL.gone()
+                            tvSizeXXL.gone()
+                            root.alpha = 0.3f
+                        } else {
+                            root.alpha = 1.0f
+                            tvSize.text = getString(R.string.size)
+                            showStockAvailable(tvSizeS, s, getString(R.string.s))
+                            showStockAvailable(tvSizeM, m, getString(R.string.m))
+                            showStockAvailable(tvSizeL, l, getString(R.string.l))
+                            showStockAvailable(tvSizeXL, xl, getString(R.string.xl))
+                            showStockAvailable(tvSizeXXL, xxl, getString(R.string.xxl))
+                        }
+
                         ivIcon.loadImageFormUrl(
                             this,
                             display.imgUrl,
@@ -127,6 +143,23 @@ class HelmetListAdapter constructor(
                 .withImage(menuPhoto)
                 .withCloseDialog()
                 .show()
+        }
+
+        @SuppressLint("SetTextI18n")
+        private fun showStockAvailable(
+            textView: TextView,
+            sizeAvailable: String,
+            sizeUnit: String
+        ) {
+            textView.apply {
+                if (sizeAvailable.toInt() > ZERO) {
+                    text = sizeUnit + "$EQUAL$sizeAvailable"
+                    visible()
+                } else {
+                    gone()
+                }
+            }
+
         }
     }
 
@@ -165,6 +198,7 @@ class HelmetListAdapter constructor(
     companion object {
         private const val COMMA_FORMAT = "%,d"
         private const val EQUAL = "="
+        private const val ZERO = 0
     }
 
 }
