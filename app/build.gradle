@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
 }
@@ -64,7 +64,6 @@ dependencies {
     implementation "com.airbnb.android:lottie:3.4.0"
     implementation 'com.github.bumptech.glide:glide:4.13.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
-    implementation 'com.github.corouteam:GlideToVectorYou:v2.0.0'
     implementation platform('com.google.firebase:firebase-bom:29.3.1')
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation "com.github.chrisbanes:PhotoView:2.3.0"
